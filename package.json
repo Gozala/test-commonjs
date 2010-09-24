@@ -1,0 +1,34 @@
+{ "name": "test"
+, "version": "0.0.1"
+, "description": "CommonJS test runner for Unit Testing/1.1"
+, "homepage": "http://github.com/Gozala/test-commonjs/"
+, "author": "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)"
+, "contributors":
+  [ "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)"
+  , "Kris Kowal <kris@cixar.com> (http://github.com/kriskowal/)"
+  , "Zach Carter"
+  , "Felix Geisendörfer"
+  , "Karl Guertin"
+  , "Ash Berlin"
+  ]
+, "repository":
+  { "type": "git"
+  , "url": "git://github.com/Gozala/test-commonjs.git"
+  }
+, "bugs": { "web": "http://github.com/Gozala/test-commonjs/issues/" }
+, "directories":
+  { "doc": "./doc"
+  , "man": "./man"
+  , "lib": "./lib"
+  , "test": "./test"
+  }
+, "scripts": { "test": "./test/node-test.js" }
+, "main": "./lib/test"
+, "engines": { "node": ">=0.1.103" }
+, "licenses" :
+  [ { "type" : "MIT"
+    , "url" : "http://github.com/isaacs/npm/raw/master/LICENSE"
+    }
+  ]
+}
+
