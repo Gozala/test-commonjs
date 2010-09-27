@@ -2,21 +2,34 @@
 
 var assert = require('assert')
 var run = require('test').run
+function Log() {
+  return (
+  { constructor: Log
+  , section: function() {
+      return this
+    }
+  , pass: function() {}
+  , fail: function() {}
+  , error: function() {}
+  , print: function() {}
+  })
+}
 
 exports['test:pass'] = function(test) {
   run(
     { 'test:pass': function() {
       assert.equal(1, 1, 'Must be equal')
     }}
-  , function(result) {
-      test(assert.equal, result.passes.length, 1, 'Must pass one test')
-      test(assert.equal, result.fails.length, 0, 'Must not fail any test')
-      test(assert.equal, result.errors.length, 0, 'Must not contain any errors')
-      return false
+  , { Log: Log
+    , callback: function(result) {
+        test(assert.equal, result.passes.length, 1, 'Must pass one test')
+        test(assert.equal, result.fails.length, 0, 'Must not fail any test')
+        test(assert.equal, result.errors.length, 0, 'Must not contain any errors')
+      }
     }
   )
 }
-
+/*
 exports['test:failure'] = function(test) {
   run(
     { 'test:must fail': function() {
@@ -91,7 +104,7 @@ exports['test:async throws'] = function(test, done) {
     }
   )
 }
-
+*/
  
  run(exports)
 
