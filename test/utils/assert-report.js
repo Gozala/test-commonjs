@@ -1,6 +1,6 @@
 'use strict'
 
-var AssertBase = require('test/assert')
+var AssertBase = require('test/assert').Assert
   , AssertDescriptor =
     { constructor: { value: Assert }
     , report: { get: function report() {
@@ -12,17 +12,18 @@ var AssertBase = require('test/assert')
         return this.report
       }, configurable: true }
     , pass: { value: function pass(message) {
-        this.passes(message)
+        this.report.passes.push(message)
       }}
     , fail: { value: function fail(e) {
-        this.fails.push(e)
+        this.report.fails.push(e)
       }}
     , error: { value: function error(e) {
-        this.errors.push(e)
+        this.report.errors.push(e)
       }}
     }
 
 function Assert() {
-  return Object.create(AssertBase, AssertDescriptor)
+  return Object.create(AssertBase(), AssertDescriptor)
 }
+exports.Assert = Assert
 
