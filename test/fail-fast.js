@@ -3,10 +3,10 @@
 var $ = require('assert')
 ,   run = require('test').run
 
-exports['test:pass'] = function(assert) {
+exports['test that passes'] = function(assert) {
   run(
     { mute: true,
-      'test:pass': function() {
+      'test fixture': function() {
         $.equal(1, 1, 'Must be equal')
       }
     }
@@ -18,10 +18,10 @@ exports['test:pass'] = function(assert) {
   )
 }
 
-exports['test:failure'] = function(assert) {
+exports['test that fails'] = function(assert) {
   run(
     { mute: true
-    , 'test:must fail': function() {
+    , 'test fixture': function() {
         $.equal(1, 2, 'Must be two')
       }
     }
@@ -33,11 +33,11 @@ exports['test:failure'] = function(assert) {
   )
 }
 
-exports['test:error'] = function(assert) {
+exports['test that throws error'] = function(assert) {
   run(
     { mute: true
-    , 'test:must throw': function() {
-        throw new Error('Sorry, but you have to see error & it is not a failure')
+    , 'test fixture': function() {
+        throw new Error('Boom!!')
       }
     }
   , function(result) {
@@ -48,55 +48,36 @@ exports['test:error'] = function(assert) {
   )
 }
 
-/*
-exports['test:pseudo async throws'] = function(test, done) {
+exports['test that passes one assert and fails fast'] = function(assert) {
   run(
-    { 'test:must throw': function() {
-      throw new Error('Sorry, but you have to see error & it is not a failure')
-    }}
+    { mute: true
+    , 'test fixture': function($$) {
+        $$.equal(1, 1, 'Must be equal')
+        $.equal(1, 2, 'Must fail test')
+      }
+    }
   , function(result) {
-      test(assert.equal, result.passes.length, 0, 'Must not pass any test')
-      test(assert.equal, result.fails.length, 0, 'Must not fail any test')
-      test(assert.equal, result.errors.length, 1, 'Must contain one error')
-      done()
-      return false
+      assert.equal(result.passes.length, 1, 'Must pass one test')
+      assert.equal(result.fails.length, 1, 'Must fail one test')
+      assert.equal(result.errors.length, 0, 'Must not contain any errors')
     }
   )
 }
  
- exports['test:pseudo async throws'] = function(test, done) {
+exports['test async with fast fail'] = function(assert) {
   run(
-    { 'test:must throw': function() {
-      throw new Error('Sorry, but you have to see error & it is not a failure')
-    }}
+    { mute: true
+    , 'test:must throw': function($, done) {
+        throw new Error('Boom!!')
+      }
+    }
   , function(result) {
-      test(assert.equal, result.passes.length, 0, 'Must not pass any test')
-      test(assert.equal, result.fails.length, 0, 'Must not fail any test')
-      test(assert.equal, result.errors.length, 1, 'Must contain one error')
-      done()
-      return false
+      assert.equal(result.passes.length, 0, 'Must not pass any test')
+      assert.equal(result.fails.length, 0, 'Must not fail any test')
+      assert.equal(result.errors.length, 1, 'Must contain one error')
     }
   )
 }
-
-exports['test:async throws'] = function(test, done) {
-  run(
-    { 'test:must throw': function() {
-      throw new Error('Sorry, but you have to see error & it is not a failure')
-    }}
-  , function(result) {
-      setTimeout(function() {
-        test(assert.equal, result.passes.length, 0, 'Must not pass any test')
-        test(assert.equal, result.fails.length, 0, 'Must not fail any test')
-        test(assert.equal, result.errors.length, 1, 'Must contain one error')
-        done()
-      })
-      return false
-    }
-  )
-}
-*/
  
 if (module == require.main) run(exports)
-
 
