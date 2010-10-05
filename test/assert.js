@@ -6,7 +6,7 @@ var run = require('test').run
 exports['test existence of all assert methods on `assert`'] = function(assert) {
   var functionType = 'function'
     , methods =
-        [ 'ok', 'equal', 'notEqual', 'deepEqual', 'notDeepEqual', 'raises' ]
+        [ 'ok', 'equal', 'notEqual', 'deepEqual', 'notDeepEqual', 'throws' ]
   run(
     { Assert: Reporter
     , mute: true
