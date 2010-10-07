@@ -22,7 +22,7 @@
   , "lib": "./lib"
   , "test": "./test"
   }
-, "scripts": { "test": "node active/package/test/all.js" }
+, "scripts": { "test": "node test/all.js" }
 , "main": "./lib/test"
 , "engines": { "node": ">=0.1.103" }
 , "licenses" :
