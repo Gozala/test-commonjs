@@ -80,4 +80,3 @@ exports['test async with fast fail'] = function(assert) {
 }
  
 if (module == require.main) run(exports)
-

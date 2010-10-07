@@ -145,4 +145,3 @@ exports['test correctness of `assert.equal`'] = function(assert) {
 }
 
 if (module == require.main) run(exports)
-

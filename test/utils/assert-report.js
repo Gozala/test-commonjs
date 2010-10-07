@@ -29,4 +29,3 @@ function Assert() {
   return Object.create(AssertBase.apply(null, arguments), AssertDescriptor)
 }
 exports.Assert = Assert
-
