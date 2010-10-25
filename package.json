@@ -1,5 +1,5 @@
 { "name": "test"
-, "version": "0.0.8"
+, "version": "0.0.9"
 , "description": "CommonJS test runner for Unit Testing/1.1"
 , "homepage": "http://github.com/Gozala/test-commonjs/"
 , "author": "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)"
