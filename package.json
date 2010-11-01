@@ -26,8 +26,8 @@
 , "main": "./lib/test"
 , "engines": { "node": ">=0.1.103" }
 , "licenses" :
-  [ { "type" : "MIT"
-    , "url" : "http://github.com/isaacs/npm/raw/master/LICENSE"
+  [ { "type" : "MPL 1.1/LGPL 2.1/GPL 2.0"
+    , "url" : "http://www.mozilla.org/MPL/"
     }
   ]
 }
