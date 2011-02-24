@@ -22,16 +22,11 @@ In order to make your package testable from [npm] you should:
 
 - package.json
 
-      { "name": "mypackage"
-      , "version": "0.7.0"
-      , "description": "Sample package"
-      , "directories":
-        { "lib": "./lib"
-        , "test": "./test"
-        }
-      , "scripts": { "test": "node test/all.js" }
-      , "engines": { "node": ">=0.1.103" }
-      , "dependencies": { "test": ">=0.0.5" }
+      { "name": "mypackage",
+        "version": "0.7.0",
+        "description": "Sample package",
+        "scripts": { "test": "node test/all.js" },
+        "dependencies": { "test": ">=0.0.5" }
       }
 
 - test/fail-slow.js
@@ -80,15 +75,15 @@ In order to make your package testable from [npm] you should:
       test／custom-assert.js
 
       var AssertBase = require('assert').Assert
-      var AssertDescriptor =
-      { constructor: { value: Assert }
-      , inRange: { value: function (lower, inner, upper, message) {
+      var AssertDescriptor = {
+        constructor: { value: Assert },
+        inRange: { value: function (lower, inner, upper, message) {
           if (lower < inner && inner < upper) {
-            this.fail(
-            { actual: inner,
-            , expected: lower + '> ' + ' < ' + upper
-            , operator: "inRange"
-            , message: message
+            this.fail({
+              actual: inner,
+              expected: lower + '> ' + ' < ' + upper,
+              operator: "inRange",
+              message: message
             })
           } else {
             this.pass(message);
@@ -96,10 +91,7 @@ In order to make your package testable from [npm] you should:
         }, enumerable: true }
       }
       function Assert() {
-        return Object.create
-        ( AssertBase.apply(null, arguments)
-        , AssertDescriptor
-        )
+        return Object.create(AssertBase.apply(null, arguments), AssertDescriptor)
       }
 
       // bundling custom asserts with test suite
