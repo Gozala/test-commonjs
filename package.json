@@ -1,33 +1,37 @@
-{ "name": "test"
-, "version": "0.0.11"
-, "description": "CommonJS test runner for Unit Testing/1.1"
-, "homepage": "http://github.com/Gozala/test-commonjs/"
-, "author": "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)"
-, "contributors":
-  [ "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)"
-  , "Kris Kowal <kris@cixar.com> (http://github.com/kriskowal/)"
-  , "Zach Carter"
-  , "Felix Geisendörfer"
-  , "Karl Guertin"
-  , "Ash Berlin"
-  ]
-, "repository":
-  { "type": "git"
-  , "url": "git://github.com/Gozala/test-commonjs.git"
-  }
-, "bugs": { "web": "http://github.com/Gozala/test-commonjs/issues/" }
-, "directories":
-  { "doc": "./doc"
-  , "man": "./man"
-  , "lib": "./lib"
-  , "test": "./test"
-  }
-, "scripts": { "test": "node test/all.js" }
-, "main": "./lib/test"
-, "engines": { "node": ">=0.1.103" }
-, "licenses" :
-  [ { "type" : "MPL 1.1/LGPL 2.1/GPL 2.0"
-    , "url" : "http://www.mozilla.org/MPL/"
+{ "name": "test",
+  "version": "0.0.11",
+  "description": "CommonJS test runner for Unit Testing/1.1",
+  "homepage": "http://github.com/Gozala/test-commonjs/",
+  "author": "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)",
+  "contributors": [
+    "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)",
+    "Kris Kowal <kris@cixar.com> (http://github.com/kriskowal/)",
+    "Zach Carter",
+    "Felix Geisendörfer",
+    "Karl Guertin",
+    "Ash Berlin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Gozala/test-commonjs.git"
+  },
+  "bugs": { "web": "http://github.com/Gozala/test-commonjs/issues/" },
+  "directories": {
+    "doc": "./doc",
+    "man": "./man",
+    "lib": "./lib",
+    "test": "./test"
+  },
+  "overlay": {
+    "node": { "directories": { "lib": "./engines/node" } }
+  },
+  "scripts": { "test": "node test/all.js" },
+  "main": "./engines/common/test",
+  "engines": { "node": ">=0.1.103" },
+  "licenses": [
+    {
+      "type" : "MPL 1.1/LGPL 2.1/GPL 2.0",
+      "url" : "http://www.mozilla.org/MPL/"
     }
   ]
 }
