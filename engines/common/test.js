@@ -1,7 +1,7 @@
 'use strict'
 
-var Assert = require('./assert').Assert
-  , Log = require('./log').Log
+var Assert = require('test/assert').Assert
+  , Log = require('test/log').Log
   // constancts
   , ERR_COMPLETED_ASSERT = 'Assert in completed test'
   , ERR_COMPLETED_COMPLETE = 'Attemt to complete test more then one times'
