@@ -184,8 +184,8 @@ Assert.prototype =
           , operator: "throws"
           }
 
-      if (exception) failure = e.actual = exception
-      if (Error) failure = e.expected = Error
+      if (exception) failure.actual = exception
+      if (Error) failure.expected = Error
       this.fail(failure)
     }
   }
