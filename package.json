@@ -19,7 +19,6 @@
   "directories": {
     "doc": "./doc",
     "man": "./man",
-    "lib": "./lib",
     "test": "./test"
   },
   "overlay": {
