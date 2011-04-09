@@ -1,5 +1,5 @@
 { "name": "test",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "CommonJS test runner for Unit Testing/1.1",
   "homepage": "http://github.com/Gozala/test-commonjs/",
   "author": "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)",
@@ -9,7 +9,8 @@
     "Zach Carter",
     "Felix Geisendörfer",
     "Karl Guertin",
-    "Ash Berlin"
+    "Ash Berlin",
+    "Francois Lafortune"
   ],
   "repository": {
     "type": "git",
