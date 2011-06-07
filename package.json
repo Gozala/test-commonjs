@@ -1,7 +1,9 @@
-{ "name": "test",
-  "version": "0.1.2",
+{
+  "name": "test",
+  "version": "0.2.0",
   "description": "CommonJS test runner for Unit Testing/1.1",
-  "homepage": "http://github.com/Gozala/test-commonjs/",
+  "keywords": [ "test", "commonjs", "unit test" ],
+  "homepage": "https://github.com/Gozala/test-commonjs/",
   "author": "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)",
   "contributors": [
     "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)",
@@ -14,24 +16,17 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/Gozala/test-commonjs.git"
+    "url": "https://github.com/Gozala/test-commonjs.git",
+    "web": "https//github.com/Gozala/test-commonjs"
   },
   "bugs": { "web": "http://github.com/Gozala/test-commonjs/issues/" },
-  "directories": {
-    "doc": "./doc",
-    "man": "./man",
-    "test": "./test"
+  "scripts": {
+    "test": "node test/all.js"
   },
-  "overlay": {
-    "node": { "directories": { "lib": "./engines/node" } }
-  },
-  "scripts": { "test": "node test/all.js" },
-  "main": "./engines/common/test",
+  "main": "./test.js",
   "engines": { "node": ">=0.1.103" },
-  "licenses": [
-    {
-      "type" : "MPL 1.1/LGPL 2.1/GPL 2.0",
-      "url" : "http://www.mozilla.org/MPL/"
-    }
-  ]
+  "licenses": [{
+    "type" : "MIT",
+    "url" : "http://jeditoolkit.com/LICENSE"
+  }]
 }
