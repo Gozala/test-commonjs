@@ -1,7 +1,13 @@
-'use strict'
+/* vim:set ts=2 sw=2 sts=2 expandtab */
+/*jshint asi: true newcap: true undef: true es5: true node: true devel: true
+         forin: true */
+/*global define: true */
 
-var Assert = require('test/assert').Assert
-  , Log = require('test/log').Log
+
+'use strict';
+
+var Assert = require('./assert').Assert
+  , Log = require('./log').Log
   // constancts
   , ERR_COMPLETED_ASSERT = 'Assert in completed test'
   , ERR_COMPLETED_COMPLETE = 'Attemt to complete test more then one times'
