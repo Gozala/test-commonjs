@@ -280,7 +280,6 @@ Assert.prototype = {
 exports.Assert = Assert;
 
 function isDeepEqual(actual, expected) {
-
   // 7.1. All identical values are equivalent, as determined by ===.
   if (actual === expected) {
     return true;
@@ -324,7 +323,7 @@ function isEquivalent(a, b, stack) {
 }
 
 function isArrayEquivalent(a, b, stack) {
-  return utils.isArray(a) && utils.isArray(b) &&
+  return utils.isArray(a) && utils.isArray(b) && a.length === b.length &&
          a.every(function(value, index) {
            return isDeepEqual(value, b[index]);
          });

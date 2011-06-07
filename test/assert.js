@@ -48,13 +48,13 @@ exports['test correctness of `assert.ok`'] = function (assert) {
         assert.equal(report.fails.length, index + 1,
                      'The `' + value + '` must be falsy')
       })
-
-      assert.equal(report.passes.length, valid.length,
+    }
+  }, function() {
+    assert.equal(report.passes.length, valid.length,
                    'Amount of passed test must match amount of valid inputs')
       assert.equal(report.fails.length, invalid.length,
                    'Amount of failed test must match amount of invalid inputs')
       assert.equal(report.errors.length, 0, 'Must be no errors')
-    }
   })
 }
 
@@ -105,13 +105,51 @@ exports['test correctness of `assert.equal`'] = function (assert) {
         $.equal(value[0], value[1], message)
         assert.equal(report.fails.length, index + 1, message)
       })
+    }
+  }, function() {
+     assert.equal(report.passes.length, valid.length,
+                   'Amount of passed test must match amount of valid inputs')
+      assert.equal(report.fails.length, invalid.length,
+                   'Amount of failed test must match amount of invalid inputs')
+      assert.equal(report.errors.length, 0, 'Must be no errors')
+  })
+}
 
+exports['test correctness of `assert.deepEqual`'] = function (assert) {
+  var valid, invalid, report
+  valid = [
+    [ [], [] ],
+    [ {}, {} ],
+  ]
+  invalid = [
+    [ [], undefined ],
+    [ [], [1] ]
+  ]
+  report = null
+
+  run({
+    Assert: Reporter,
+    mute: true,
+    'test fixture': function ($) {
+      report = $.report
+      valid.forEach(function (value, index) {
+        var message = '`' + value[0] + '` is deepEqual of `' + value[1] + '`'
+        $.deepEqual(value[0], value[1], message)
+        assert.equal(report.passes.length, index + 1, message)
+      })
+
+      invalid.forEach(function (value, index) {
+        var message = '`' + value[0] + '` is not deepEqual of `' + value[1] + '`'
+        $.deepEqual(value[0], value[1], message)
+        assert.equal(report.fails.length, index + 1, message)
+      })
+    }
+  }, function() {
       assert.equal(report.passes.length, valid.length,
                    'Amount of passed test must match amount of valid inputs')
       assert.equal(report.fails.length, invalid.length,
                    'Amount of failed test must match amount of invalid inputs')
       assert.equal(report.errors.length, 0, 'Must be no errors')
-    }
   })
 }
 
