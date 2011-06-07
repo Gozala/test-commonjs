@@ -1,6 +1,13 @@
-'use strict'
+/* vim:set ts=2 sw=2 sts=2 expandtab */
+/*jshint asi: true newcap: true undef: true es5: true node: true devel: true
+         forin: true */
+/*global define: true */
 
-var AssertBase = require('test/assert').Assert
+(typeof define === "undefined" ? function ($) { $(require, exports, module) } : define)(function (require, exports, module, undefined) {
+
+'use strict';
+
+var AssertBase = require('../assert').Assert
 /**
  * Generates custom assertion constructors that may be bundled with a test
  * suite.
@@ -9,10 +16,12 @@ var AssertBase = require('test/assert').Assert
  */
 function Assert() {
   var descriptorMap = {}
-  Array.prototype.forEach.call(arguments, function(name) {
-    descriptorMap[name] = { value: function(message) {
-      this.pass(message)
-    }}
+  Array.prototype.forEach.call(arguments, function (name) {
+    descriptorMap[name] = {
+      value: function (message) {
+        this.pass(message)
+      }
+    }
   })
   return function Assert() {
     return Object.create(AssertBase.apply(null, arguments), descriptorMap)
@@ -20,27 +29,30 @@ function Assert() {
 }
 exports._ = Assert
 
-exports['test suite'] =
-{ Assert: Assert('foo')
-, 'test that custom assertor is passed to test function': function(assert) {
+exports['test suite'] = {
+  Assert: Assert('foo'),
+  'test that custom assertor is passed to test function': function (assert) {
     assert.ok('foo' in assert, 'custom assertion function `foo` is defined')
     assert.foo('custom assertion function `foo` is called')
-  }
-, 'test sub suite':
-  { 'test that `Assert` is not inherited by sub suits': function(assert) {
+  },
+  'test sub suite': {
+    'test that `Assert` is not inherited by sub suits': function (assert) {
       assert.ok(!('foo' in assert), 'assertion function `foo` is not defined')
-    }
-  , 'test sub sub suite':
-    { Assert: Assert('bar')
-    , 'test that custom assertor is passed to test function': function(assert) {
+    },
+    'test sub sub suite': {
+      Assert: Assert('bar'),
+      'test that custom assertor is passed to test function': function (assert) {
         assert.ok('bar' in assert, 'custom assertion function `bar` is defined')
         assert.bar('custom assertion function `bar` is called')
-      }
-    , 'test that `Assert` is not inherited by sub sub suits': function(assert) {
+      },
+      'test that `Assert` is not inherited by sub sub suits': function (assert) {
         assert.ok(!('foo' in assert), 'assertion function `foo` is not defined')
       }
     }
   }
 }
 
+
 if (module == require.main) require('test').run(exports)
+
+})
