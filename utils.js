@@ -55,7 +55,7 @@ exports.isNumber = isNumber;
  *    isRegExp(/moe/); // true
  */
 function isRegExp(value) {
-  return isObject(value) && instanceOf(value, RegExp);
+  return instanceOf(value, RegExp);
 }
 exports.isRegExp = isRegExp;
 
@@ -75,7 +75,7 @@ exports.isDate = isDate;
  *    isFunction(function foo(){}) // true
  */
 function isFunction(value) {
-    return typeof value === "function";
+    return typeof value === "function" && value.call && value.apply;
 }
 exports.isFunction = isFunction;
 
