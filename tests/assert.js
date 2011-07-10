@@ -8,22 +8,22 @@
 'use strict';
 
 var run = require('../test').run
-var Reporter = require('./utils/assert-report').Assert
+var Logger = require('./utils/logger').Logger
 
 exports['test existence of all assert methods on assert'] = function (assert) {
   var functionType, methods;
   functionType = 'function'
   methods = ['ok', 'equal', 'notEqual', 'deepEqual', 'notDeepEqual', 'throws']
   run({
-    Assert: Reporter,
-    mute: true,
-    'test fixture': function ($) {
+    'test fixture': function (assert) {
       methods.forEach(function (name) {
-        assert.equal(typeof $[name], functionType,
+        assert.equal(typeof assert[name], functionType,
                      '`' + name + '` must be method of `assert`')
       })
     }
-  })
+  }, new Logger(function(passes) {
+    assert.equal(passes.length, methods.length, 'all methdos were found')
+  }))
 }
 
 exports['test correctness of `assert.ok`'] = function (assert) {
@@ -33,33 +33,26 @@ exports['test correctness of `assert.ok`'] = function (assert) {
   report = null
 
   run({
-    Assert: Reporter,
-    mute: true,
-    'test fixture': function ($) {
-      report = $.report
+    'test fixture': function (assert) {
       valid.forEach(function (value, index) {
-        $.ok(value, value + ' is valid')
-        assert.equal(report.passes.length, index + 1,
-                     'The `' + value + '` must be truthy')
+        assert.ok(value, value + ' is valid')
       })
 
       invalid.forEach(function (value, index) {
-        $.ok(value, value + ' is invalid')
-        assert.equal(report.fails.length, index + 1,
-                     'The `' + value + '` must be falsy')
+        assert.ok(value, value + ' is invalid')
       })
     }
-  }, function() {
-    assert.equal(report.passes.length, valid.length,
-                   'Amount of passed test must match amount of valid inputs')
-      assert.equal(report.fails.length, invalid.length,
-                   'Amount of failed test must match amount of invalid inputs')
-      assert.equal(report.errors.length, 0, 'Must be no errors')
-  })
+  }, Logger(function(passes, fails, errors) {
+    assert.equal(passes.length, valid.length,
+                 'Amount of passed test must match amount of valid inputs')
+    assert.equal(fails.length, invalid.length,
+                 'Amount of failed test must match amount of invalid inputs')
+    assert.equal(errors.length, 0, 'Must be no errors')
+  }))
 }
 
 exports['test correctness of `assert.equal`'] = function (assert) {
-  var valid, invalid, report
+  var valid, invalid
 
   valid = [
     [1, 1],
@@ -87,32 +80,26 @@ exports['test correctness of `assert.equal`'] = function (assert) {
     [NaN, NaN], // wtfjs
     [JSON.parse('{ "bla": 3 }'), JSON.parse('{ "bla": 3 }')]
   ]
-  report = null
 
   run({
-    Assert: Reporter,
-    mute: true,
-    'test fixture': function ($) {
-      report = $.report
+    'test fixture': function (assert) {
       valid.forEach(function (value, index) {
         var message = '`' + value[0] + '` is equal to `' + value[1] + '`'
-        $.equal(value[0], value[1], message)
-        assert.equal(report.passes.length, index + 1, message)
+        assert.equal(value[0], value[1], message)
       })
 
       invalid.forEach(function (value, index) {
         var message = '`' + value[0] + '` is not equal to `' + value[1] + '`'
-        $.equal(value[0], value[1], message)
-        assert.equal(report.fails.length, index + 1, message)
+        assert.equal(value[0], value[1], message)
       })
     }
-  }, function() {
-     assert.equal(report.passes.length, valid.length,
-                   'Amount of passed test must match amount of valid inputs')
-      assert.equal(report.fails.length, invalid.length,
-                   'Amount of failed test must match amount of invalid inputs')
-      assert.equal(report.errors.length, 0, 'Must be no errors')
-  })
+  }, Logger(function(passes, fails, errors) {
+    assert.equal(passes.length, valid.length,
+                 'Amount of passed test must match amount of valid inputs')
+    assert.equal(fails.length, invalid.length,
+                 'Amount of failed test must match amount of invalid inputs')
+    assert.equal(errors.length, 0, 'Must be no errors')
+  }))
 }
 
 exports['test correctness of `assert.deepEqual`'] = function (assert) {
@@ -128,31 +115,25 @@ exports['test correctness of `assert.deepEqual`'] = function (assert) {
   report = null
 
   run({
-    Assert: Reporter,
-    mute: true,
-    'test fixture': function ($) {
-      report = $.report
+    'test fixture': function (assert) {
       valid.forEach(function (value, index) {
         var message = '`' + value[0] + '` is deepEqual of `' + value[1] + '`'
-        $.deepEqual(value[0], value[1], message)
-        assert.equal(report.passes.length, index + 1, message)
+        assert.deepEqual(value[0], value[1], message)
       })
 
       invalid.forEach(function (value, index) {
         var message = '`' + value[0] + '` is not deepEqual of `' + value[1] + '`'
-        $.deepEqual(value[0], value[1], message)
-        assert.equal(report.fails.length, index + 1, message)
+        assert.deepEqual(value[0], value[1], message)
       })
     }
-  }, function() {
-      assert.equal(report.passes.length, valid.length,
-                   'Amount of passed test must match amount of valid inputs')
-      assert.equal(report.fails.length, invalid.length,
-                   'Amount of failed test must match amount of invalid inputs')
-      assert.equal(report.errors.length, 0, 'Must be no errors')
-  })
+  }, Logger(function(passes, fails, errors) {
+    assert.equal(passes.length, valid.length,
+                 'Amount of passed test must match amount of valid inputs')
+    assert.equal(fails.length, invalid.length,
+                 'Amount of failed test must match amount of invalid inputs')
+    assert.equal(errors.length, 0, 'Must be no errors')
+  }))
 }
-
 
 if (module == require.main) run(exports)
 
