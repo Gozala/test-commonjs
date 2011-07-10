@@ -21,9 +21,9 @@
   },
   "bugs": { "web": "http://github.com/Gozala/test-commonjs/issues/" },
   "scripts": {
-    "test": "node tests/all.js"
+    "test": "node tests/test-node.js"
   },
-  "main": "./test.js",
+  "main": "./engines/node/test.js",
   "engines": { "node": ">=0.4.x" },
   "licenses": [{
     "type" : "MIT",

@@ -7,9 +7,6 @@
 'use strict';
 
 var Assert = require('./assert').Assert
-var Logger = require('./logger').Logger
-
-    // constancts
 
 var ERR_COMPLETED_ASSERT = 'Assert in completed test'
 var ERR_COMPLETED_COMPLETE = 'Attemt to complete test more then one times'
@@ -85,7 +82,6 @@ function Unit(name, units, logger, Assert) {
  * Test runner function.
  */
 exports.run = function run(units, logger) {
-  logger = logger || new Logger()
   Unit('Running all tests:', units, logger, Assert)(function done() {
     logger.report()
   })

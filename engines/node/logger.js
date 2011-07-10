@@ -9,7 +9,7 @@
 "use strict";
 
 var font = require('./ansi-font/index')
-var toSource = require('./utils').source
+var toSource = require('../../utils').source
 
 var INDENT = '  '
 
