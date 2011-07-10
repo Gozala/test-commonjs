@@ -27,7 +27,6 @@ function Assert() {
     return Object.create(AssertBase.apply(null, arguments), descriptorMap)
   }
 }
-exports._ = Assert
 
 exports['test suite'] = {
   Assert: Assert('foo'),
@@ -36,8 +35,8 @@ exports['test suite'] = {
     assert.foo('custom assertion function `foo` is called')
   },
   'test sub suite': {
-    'test that `Assert` is not inherited by sub suits': function (assert) {
-      assert.ok(!('foo' in assert), 'assertion function `foo` is not defined')
+    'test that `Assert` is inherited by sub suits': function (assert) {
+      assert.ok('foo' in assert, 'assertion function `foo` is defined')
     },
     'test sub sub suite': {
       Assert: Assert('bar'),
@@ -52,7 +51,6 @@ exports['test suite'] = {
   }
 }
 
-
-if (module == require.main) require('test').run(exports)
+if (module == require.main) require('../test').run(exports)
 
 })
