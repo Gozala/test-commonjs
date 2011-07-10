@@ -1,7 +1,7 @@
 { 
   "name": "test",
-  "version": "0.2.1",
-  "description": "CommonJS test runner for Unit Testing/1.1",
+  "version": "0.3.0",
+  "description": "UncommonJS test runner.",
   "keywords": [ "test", "commonjs", "unit test" ],
   "homepage": "https://github.com/Gozala/test-commonjs/",
   "author": "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)",
@@ -24,7 +24,7 @@
     "test": "node tests/all.js"
   },
   "main": "./test.js",
-  "engines": { "node": ">=0.1.103" },
+  "engines": { "node": ">=0.4.x" },
   "licenses": [{
     "type" : "MIT",
     "url" : "http://jeditoolkit.com/LICENSE"
