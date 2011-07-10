@@ -38,7 +38,6 @@ exports['test must call callback to complete it'] = function (assert, done) {
     }, 0)
 }
 
-
 exports['test multiple tests with timeout'] = function (assert, done) {
   var tests = 0
 
@@ -57,7 +56,9 @@ exports['test multiple tests with timeout'] = function (assert, done) {
     },
     'test fail fast': function (assert) {
       tests ++
-      require('assert').ok(0)
+      // TODO: Find a better solution for browser.
+      //require('assert').ok(0)
+      assert.ok(0)
     },
     'ignore if does not starts with test': function () {
       tests ++
