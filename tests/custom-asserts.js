@@ -51,6 +51,4 @@ exports['test suite'] = {
   }
 }
 
-if (module == require.main) require('../test').run(exports)
-
 })

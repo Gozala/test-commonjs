@@ -135,6 +135,4 @@ exports['test correctness of `assert.deepEqual`'] = function (assert) {
   }))
 }
 
-if (module == require.main) run(exports)
-
 })

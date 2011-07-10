@@ -76,6 +76,4 @@ exports['test multiple tests with timeout'] = function (assert, done) {
   }))
 }
 
-if (module == require.main) run(exports)
-
 })
