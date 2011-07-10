@@ -21,7 +21,7 @@
   },
   "bugs": { "web": "http://github.com/Gozala/test-commonjs/issues/" },
   "scripts": {
-    "test": "node tests/test-node.js"
+    "test": "node tests/engines/node/test.js"
   },
   "main": "./engines/node/test.js",
   "engines": { "node": ">=0.4.x" },
