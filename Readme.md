@@ -1,10 +1,8 @@
-CommonJS Test Runner
-====================
+# UncommonJS unit test runner #
 
-Implementation of test runner compatible with [CommonJS Unit Testing/1.1]
+Implementation of [UncommonJS unit test runner].
 
-Testing
--------
+## Testing ##
 
 In order to make your package testable from [npm] you should:
 
@@ -13,12 +11,10 @@ In order to make your package testable from [npm] you should:
 - Define test script in package descriptor under `scripts` section.
 - Define dependency on this package (It's name is "test" in [npm] registry).
 - Write your tests
-- Test your package by running all tests `npm test mypackage@active`
-  or run individual tests `node path/to/test/group.js`
+- Test your package by running all tests `npm test`
+  or run individual tests `node ./path/to/test/group.js`
 
 ####Example####
-
-[Gist version](http://gist.github.com/616484)
 
 - package.json
 
@@ -26,7 +22,7 @@ In order to make your package testable from [npm] you should:
         "version": "0.7.0",
         "description": "Sample package",
         "scripts": { "test": "node test/all.js" },
-        "dependencies": { "test": ">=0.0.5" }
+        "devDependencies": { "test": ">=0.0.5" }
       }
 
 - test/fail-slow.js
@@ -106,8 +102,8 @@ In order to make your package testable from [npm] you should:
 
 
 For more examples checkout tests for this package and for more details see
-the [CommonJS Unit Testing/1.1] specification.
+the [UncommonJS unit test runner] specification.
 
-[CommonJS Unit Testing/1.1]:http://wiki.commonjs.org/wiki/Unit_Testing/1.1
+[UncommonJS unit test runner]:https://github.com/kriskowal/uncommonjs/blob/master/tests/specification.md
 [npm]:http://npmjs.org/
 
