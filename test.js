@@ -47,7 +47,6 @@ function Test(name, unit, logger, Assert) {
         if (isSync) done()
       }
     } catch (exception) {
-      console.trace(exception)
       if (ERR_EXPECT === exception.name) assert.fail(exception)
       else logger.error(exception)
       done()
