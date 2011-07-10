@@ -1,5 +1,9 @@
 # Changes #
 
+## 0.4.0 / 2011-07-10 ##
+
+  - Support for browser runtime.
+
 ## 0.3.0 / 2011-07-10 ##
 
   - Switching to Uncommonjs spec.
