@@ -8,7 +8,7 @@
 'use strict';
 
 var run = require('../test').run
-var Reporter = require('./utils/assert-report').Assert
+var Logger = require('./utils/logger').Logger
 
 exports['test must call callback to complete it'] = function (assert, done) {
 
@@ -18,66 +18,62 @@ exports['test must call callback to complete it'] = function (assert, done) {
     report = null
 
     run({
-      mute: true,
-      Assert: Reporter,
-      'test:must throw': function ($assert, $done) {
-        report = $assert.report
-        completeInnerTest = $done
-        $assert.equal(1, 1, 'Must be equal')
+      'test:must throw': function (assert, done) {
+        completeInnerTest = done
+        assert.equal(1, 1, 'Must be equal')
       }
-    }, function (result) {
+    }, Logger(function (passes, fails, errors) {
       isDone = true
       assert.equal(isTimerCalled, true, 'timer should be called already')
+      assert.equal(passes.length, 1, 'Must contain one pass')
+      assert.equal(fails.length, 0, 'No fails')
+      assert.equal(errors.length, 0, 'No errors')
       done()
-    })
+    }))
 
     setTimeout(function () {
       assert.equal(isDone, false, 'callback must not be called')
-      assert.equal(report.passes.length, 1, 'Must contain one pass')
       isTimerCalled = true
       completeInnerTest()
     }, 0)
-    }
-    
-    
-    
-exports['test multiple tests with timeout'] = function (assert, done) {
-  var reports
+}
 
-  reports = []
+
+exports['test multiple tests with timeout'] = function (assert, done) {
+  var tests = 0
+
   run({
-    mute: true,
-    'test async': function ($, done) {
-      reports.push(1)
+    'test async': function (assert, done) {
+      tests ++
       setTimeout(function () {
-        $.ok(true)
-        $.ok(false)
+        assert.ok(true)
+        assert.ok(false)
         done()
       }, 100)
     },
-    'test throws': function ($) {
-      reports.push(2)
+    'test throws': function (assert) {
+      tests ++
       throw new Error('boom')
     },
-    'test fail fast': function ($) {
-      reports.push(3)
+    'test fail fast': function (assert) {
+      tests ++
       require('assert').ok(0)
     },
     'ignore if does not starts with test': function () {
-      reports.push(5)
+      tests ++
     },
-    'test sync pass': function ($) {
-      reports.push(4)
-      $.equal(1, 2)
-      $.equal(2, 2)
+    'test sync pass': function (assert) {
+      tests ++
+      assert.equal(1, 2)
+      assert.equal(2, 2)
     }
-  }, function (result) {
-    assert.equal(reports.length, 4, 'Suite had to contain three tests')
-    assert.equal(result.passes.length, 2, 'Must pass two tests')
-    assert.equal(result.fails.length, 3, 'Must fail tree tests')
-    assert.equal(result.errors.length, 1, 'Must report one error')
+  }, Logger(function (passes, fails, errors) {
+    assert.equal(tests, 4, 'All test were executed')
+    assert.equal(passes.length, 2, 'Must pass two tests')
+    assert.equal(fails.length, 3, 'Must fail tree tests')
+    assert.equal(errors.length, 1, 'Must report one error')
     done()
-  })
+  }))
 }
 
 if (module == require.main) run(exports)
