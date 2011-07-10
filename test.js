@@ -1,13 +1,13 @@
 /* vim:set ts=2 sw=2 sts=2 expandtab */
-/*jshint asi: true newcap: true undef: true es5: true node: true devel: true
-         forin: false */
+/*jshint asi: true undef: true es5: true node: true devel: true
+         forin: true */
 /*global define: true */
 (typeof define === "undefined" ? function ($) { $(require, exports, module) } : define)(function (require, exports, module, undefined) {
 
 'use strict';
 
-var Assert = require('./assert.js').Assert
-var Log = require('./log.js').Log
+var Assert = require('./assert').Assert
+var Logger = require('./logger').Logger
 
     // constancts
 
@@ -17,253 +17,80 @@ var ERR_EXPECT = 'AssertionError'
 
 
 /**
- * Test constructor. Wrapper of the CommonJS test function.
+ * Creates a test function.
  */
-function Test(options) {
-  var test = Object.create(Test.prototype, {
-    name: {
-      value: options.name
-    },
-    mute: {
-      value: options.mute
-    },
-    unit: {
-      value: options.unit
-    },
-    log: {
-      value: options.log
-    },
-    passes: {
-      value: []
-    },
-    fails: {
-      value: []
-    },
-    errors: {
-      value: []
+function Test(name, unit, logger, Assert) {
+  var isSync = unit.length <= 1
+  var isFailFast = !unit.length
+  var isDone = false
+  return function test(next) {
+    logger = logger.section(name)
+    var assert = Assert(logger)
+    function done() {
+      if (isDone) return logger.error(new Error(ERR_COMPLETED_COMPLETE))
+      isDone = true
+      next()
     }
-  })
-  test.assert = options.Assert(test)
-  return test
-}
-Test.prototype = {
-  constructor: Test,
-  /**
-   * Name of the test unit.
-   * @param {String}
-   */
-  name: null,
-  /**
-   * Instance of Logger used to log results of the tests. All the nested tests
-   * and suites will get sub-loggers of this one.
-   * @type {Logger}
-   */
-  log: null,
-  /**
-   * CommonJS test function that is being wrapped by this object.
-   * @type {Function}
-   */
-  unit: null,
-  /**
-   * Array of all the `AssertError`s for the this unit.
-   * @type {AssertError[]}
-   */
-  fails: null,
-  /**
-   * Array of the exceptions that occured during execurtion of this unit.
-   * @type {Error[]}
-   */
-  errors: null,
-  /**
-   * Array of the passed assertion messages.
-   * @type {String[]}
-   */
-  passes: null,
-  /**
-   * Wheather or not test execution is finished. Used for logging errors for all
-   * the asserts that are executed after test is finished.
-   */
-  completed: false,
-  pass: function pass(message) {
-    message = message || ''
-    if (this.completed) return this.error(new Error(ERR_COMPLETED_ASSERT))
-    this.passes.push(message)
-    if (!this.mute) this.log.pass(message)
-  },
-  fail: function fail(e) {
-    if (this.completed) return this.error(new Error(ERR_COMPLETED_ASSERT))
-    this.fails.push(e)
-    if (!this.mute) this.log.fail(e)
-  },
-  error: function error(e) {
-    this.errors.push(e)
-    if (!this.mute) this.log.error(e)
-  },
-  complete: function complete(callback) {
-    if (this.completed) return this.error(new Error(ERR_COMPLETED_COMPLETE))
-    callback(this, this.completed = true)
-  },
-  run: function run(callback) {
-    var unit, sync, failFast, assert, complete;
-    unit = this.unit
-    sync = unit.length <= 1
-    failFast = !unit.length
-    assert = this.assert
-    complete = this.complete = this.complete.bind(this, callback)
-
     try {
-      if (!this.mute) this.log.print(this.name)
-      unit(assert, complete)
-      if (failFast) this.pass()
-      if (sync) this.complete()
-    } catch (e) {
-      if (ERR_EXPECT == e.name) assert.fail(e)
-      else assert.error(e)
-      this.complete()
+      var result = unit(assert, done)
+      // If it's async test that returns a promise.
+      if (result && typeof(result.then) === 'function') {
+        result.then(function passed() {
+          logger.pass('passed')
+          done()
+        }, function failed(reason) {
+          logger.fail(reason)
+          done()
+        })
+      } else {
+        if (isFailFast) logger.pass('passed')
+        if (isSync) done()
+      }
+    } catch (exception) {
+      console.trace(exception)
+      if (ERR_EXPECT === exception.name) assert.fail(exception)
+      else logger.error(exception)
+      done()
     }
   }
 }
 
-/**
- * Test suite / group constructor. All the tests in the suite can be executed
- * by calling `run` method on returned instance.
- * @param {Object} options
- *    Options with keys:
- *    @param {Object} tests
- *      List of test functions / sublists of test functions.
- *    @param {Log} log
- *      Logger for this Suite. If this is sub-suite logger provided will be
- *      smart enough to indent results for this suite.
- *    @param {Assert} Assert
- *      Assertions constructor. Constructor is used to construct individual
- *      assert objects per test.
- */
-
-function Suite(options) {
-  var log, units, unitMap
-  log = options.log
-  units = []
-  unitMap = options.units
-
-  for (var name in unitMap) {
-    if (0 !== name.indexOf('test')) continue;
-    var unit = unitMap[name]
-    units.push(('function' == typeof unit ? Test : Suite)({
-      name: name,
-      mute: options.mute,
-      units: unit,
-      unit: unit,
-      Assert: unitMap.Assert || Assert,
-      log: log.section()
-    }))
-  }
-
-  return Object.create(Suite.prototype, {
-    name: { value: options.name },
-    mute: { value: options.mute },
-    log: { value: log },
-    units: { value: units }
-  })
-}
-Suite.prototype = Object.create({
-  constructor: Suite,
-  /**
-   * Name of the test unit.
-   * @param {String}
-   */
-  name: null,
-  /**
-   * Instance of Logger used to log results of the tests. All the nested tests
-   * and suites will get sub-loggers of this one.
-   * @type {Logger}
-   */
-  log: null,
-  /**
-   * Array of all the `AssertError`s for the this unit.
-   * @type {AssertError[]}
-   */
-  fails: null,
-  /**
-   * Array of the exceptions that occured during execurtion of this unit.
-   * @type {Error[]}
-   */
-  errors: null,
-  /**
-   * Array of the passed assertion messages.
-   * @type {String[]}
-   */
-  passes: null,
-  /**
-   * List of tests / suites to run on execution.
-   * @type {Suite|Test[]}
-   */
-  units: null,
-  /**
-   * Index of the test that will be executed on calling `next`.
-   * @type {Number}
-   */
-  index: 0,
-  /**
-   * Callback that is called when all the tests in the suite are executed.
-   * @type {Function}
-   */
-  complete: null,
-  /**
-   * Calling this function executes all the tests in this and all the subsuites.
-   * Passed callback is called after all tests are finished.
-   * @param {Function} callback
-   *    Function that will be called once whole suite is executed
-   */
-  run: function run(callback) {
-    if (!this.mute) this.log.print(this.name)
-    this.complete = callback
-    this.next = this.next.bind(this)
-    this.next()
-  },
-  /**
-   * Runs next test / suite of tests. If no tests are left in the suite
-   * callback passed to the run method is called instead.
-   */
-  next: function next() {
-    var units = this.units
-    if (this.index < units.length) {
-      units[this.index++].run(this.next)
-    } else this.complete(this)
-  }
-}, {
-  passes: { get: UnitedProprerty('passes') },
-  fails: { get: UnitedProprerty('fails') },
-  errors: { get: UnitedProprerty('errors') }
-})
-
-function UnitedProprerty(name) {
-  return function Property() {
-    return this.units.reduce(function (value, unit) {
-      return value.concat(unit[name])
-    }, [])
-  }
-}
 
 /**
- * Runs passed tests.
+ * Creates a test suite / group. Calling returned function will execute
+ * all test in the given suite.
  */
+function Suite(name, units, logger, Assert) {
+  // Collecting properties that represent test functions or suits.
+  var names = Object.keys(units).filter(function isTest(name) {
+    return 0 === name.indexOf('test')
+  })
+  // Returning a function that executes all test in this suite and all it's
+  // sub-suits.
+  return function suite(done) {
+    // Chaining test / suits so that each is executed after last is done.
+    (function next() {
+      var name = names.shift()
+      if (name) Unit(name, units[name], logger, units.Assert || Assert)(next)
+      else done()
+    })(logger = logger.section(name))
+  }
+}
+function Unit(name, units, logger, Assert) {
+  return typeof(units) === 'function' ? Test(name, units, logger, Assert)
+                                      : Suite(name, units, logger, Assert)
+}
 
-function run(units, callback) {
-  var log = Log()
-  Suite({
-    name: 'Running all tests:',
-    units: units,
-    mute: units.mute === true,
-    log: log
-  }).run(function (suite) {
-    if (callback) return callback(suite)
-    if (suite.mute) return null
-    log.print('Passed:' + suite.passes.length +
-              ' Failed:' + suite.fails.length +
-              ' Errors:' + suite.errors.length)
+
+/**
+ * Test runner function.
+ */
+exports.run = function run(units, logger) {
+  logger = logger || new Logger()
+  Unit('Running all tests:', units, logger, Assert)(function done() {
+    logger.report()
   })
 }
-exports.run = run
 
 
 });
