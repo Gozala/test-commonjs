@@ -306,6 +306,7 @@ function source(value, indent, limit, offset, visited) {
           }
 
           if (descriptor.set) {
+            if (descriptor.get) result += ',\n';
             result += offset + indent + "set " + name + " ";
             accessor = source(descriptor.set, indent, _limit, indent + offset,
                               visited);
