@@ -20,7 +20,7 @@ function failed(message) {
   return font.red('✗ ' + message)
 }
 function errored(message) {
-  return font.magenta('⚡ ', message)
+  return font.magenta('⚡ ' + message)
 }
 
 function indent(message, indentation) {
@@ -60,7 +60,7 @@ function Logger(options) {
 
   this.error = function error(exception) {
     results.errors.push(exception)
-    print(indent(errored(toSource(exception)), indentation))
+    print(indent(errored(exception.stack || exception), indentation))
   }
 
   this.section = function section(title) {
