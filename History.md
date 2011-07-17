@@ -1,5 +1,9 @@
 # Changes #
 
+## 0.4.1 / 2011-07-18 ##
+
+  - Improved error reporting.
+
 ## 0.4.0 / 2011-07-10 ##
 
   - Support for browser runtime.
