@@ -19,7 +19,7 @@
     "url": "https://github.com/Gozala/test-commonjs.git",
     "web": "https//github.com/Gozala/test-commonjs"
   },
-  "bugs": { "web": "http://github.com/Gozala/test-commonjs/issues/" },
+  "bugs": { "url": "http://github.com/Gozala/test-commonjs/issues/" },
   "scripts": {
     "test": "node tests/engines/node/test.js",
     "test-browser": "open tests/engines/browser/index.html"
