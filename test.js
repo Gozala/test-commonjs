@@ -2,11 +2,12 @@
 /*jshint asi: true undef: true es5: true node: true devel: true
          forin: true */
 /*global define: true */
-(typeof define === "undefined" ? function ($) { $(require, exports, module) } : define)(function (require, exports, module, undefined) {
+(function(define){
+define(["exports", "./assert"], function(exports, assert, undefined){
 
 'use strict';
 
-var Assert = require('./assert').Assert
+var Assert = assert.Assert;
 
 var ERR_COMPLETED_ASSERT = 'Assert in completed test'
 var ERR_COMPLETED_COMPLETE = 'Attemt to complete test more then one times'
@@ -89,3 +90,13 @@ exports.run = function run(units, logger) {
 
 
 });
+})(typeof define != "undefined" ?
+    define: // AMD/RequireJS format if available
+    function(deps, factory){
+        // CommonJS environment, like NodeJS
+        deps = [exports].concat(deps.slice(1).map(function(name){
+            return require(name);
+        }));
+        factory.apply(this, deps);
+    }
+);
