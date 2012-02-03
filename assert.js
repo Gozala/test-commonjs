@@ -248,6 +248,8 @@ Assert.prototype = {
     // If exception was thrown and `Error` argument was not passed assert is
     // passed.
     if (threw && (utils.isUndefined(Error) ||
+                 // If Error is thrown exception
+                 (Error == exception) ||
                  // If passed `Error` is RegExp using it's test method to
                  // assert thrown exception message.
                  (utils.isRegExp(Error) && Error.test(exception.message)) ||

@@ -1,5 +1,17 @@
 # Changes #
 
+## 0.4.4 / 2012-01-15
+
+  - Improve `assert.throws` API to accept exception as an argument.
+
+## 0.4.3 / 2011-11-15
+
+   - Use newer version of ansi-font library.
+    
+## 0.4.2 / 2011-11-15
+
+   - Use bug.url to avoid warning form NPM.
+
 ## 0.4.1 / 2011-07-18 ##
 
   - Improved error reporting.
