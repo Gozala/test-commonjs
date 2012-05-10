@@ -3,12 +3,10 @@
          forin: false */
 /*global define: true */
 
-(typeof define === "undefined" ? function ($) { $(require, exports, module) } : define)(function (require, exports, module, undefined) {
+(function(define){
+define(["exports", "./utils"], function(exports, utils, undefined){
 
 "use strict";
-
-var utils = require("./utils")
-
 
 /**
  * The `AssertionError` is defined in assert.
@@ -332,3 +330,13 @@ function isArrayEquivalent(a, b, stack) {
 }
 
 });
+})(typeof define != "undefined" ?
+    define: // AMD/RequireJS format if available
+    function(deps, factory){
+        // CommonJS environment, like NodeJS
+        deps = [exports].concat(deps.slice(1).map(function(name){
+            return require(name);
+        }));
+        factory.apply(this, deps);
+    }
+);
