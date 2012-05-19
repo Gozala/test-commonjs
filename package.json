@@ -28,6 +28,6 @@
   "engines": { "node": ">=0.4.x" },
   "licenses": [{
     "type" : "MIT",
-    "url" : "http://jeditoolkit.com/LICENSE"
+    "url" : "https://github.com/Gozala/test-commonjs/License.md"
   }]
 }
