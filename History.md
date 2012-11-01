@@ -3,6 +3,8 @@
 ## 0.5.1 / 2012-10-31
 
   - Fix bug introduced in 0.5.0 that exited process with a wrong code.
+  - Add `assert.end` function as an alternative to `done` callback.
+  - Change module layout to match better node conventions.
 
 ## 0.5.0 / 2012-10-31
 

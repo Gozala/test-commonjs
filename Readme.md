@@ -1,8 +1,8 @@
-# UncommonJS unit test runner #
+# (Un)commonJS unit test runner
 
-Implementation of [UncommonJS unit test runner].
+Implementation of (Un)[commonJS unit test runner][UncommonJS unit test runner].
 
-## Testing ##
+## Testing
 
 In order to make your package testable from [npm] you should:
 
@@ -14,12 +14,13 @@ In order to make your package testable from [npm] you should:
 - Test your package by running all tests `npm test`
   or run individual tests `node ./path/to/test/group.js`
 
-####Example####
+## Example
 
 - package.json
 
     ```js
-    { "name": "mypackage",
+    {
+      "name": "mypackage",
       "version": "0.7.0",
       "description": "Sample package",
       "scripts": { "test": "node test/all.js" },
@@ -114,4 +115,3 @@ the [UncommonJS unit test runner] specification.
 
 [UncommonJS unit test runner]:https://github.com/kriskowal/uncommonjs/blob/master/tests/specification.md
 [npm]:http://npmjs.org/
-
