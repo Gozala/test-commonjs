@@ -77,9 +77,9 @@ function Unit(name, units, logger, Assert) {
  */
 exports.run = function run(units, logger) {
   Unit("Running all tests:", units, logger, Assert)(function done() {
-    var results = logger.results
     logger.report()
-    if (results.errors === 0 && results.fails === 0) process.exit(0)
-    else process.exit(1)
+    var results = logger.results
+    var failed = results.errors.length !== 0 || results.fails.length !== 0
+    process.exit(failed ? 1 : 0)
   })
 }
