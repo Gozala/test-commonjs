@@ -1,4 +1,10 @@
-# Changes #
+# Changes
+
+## 0.5.0 / 2012-10-31
+
+  - Switch to logging via `console.log` instead of `process.stdout` for
+    better compatibility with browserify.
+  - Exit process with error code if test fails, or with `0` if not.
 
 ## 0.4.4 / 2012-01-15
 
