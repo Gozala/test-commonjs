@@ -87,6 +87,7 @@ exports.run = function run(units, logger) {
   unit(function done() {
     logger.report()
     var failed = logger.errors.length !== 0 || logger.fails.length !== 0
-    if (exit) process.exit(failed ? 1 : 0)
+    // Exit only if `process.exit` exist and if no logger was provided.
+    if (exit && process.exit) process.exit(failed ? 1 : 0)
   })
 }
