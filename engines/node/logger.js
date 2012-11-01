@@ -31,6 +31,7 @@ function Logger(options) {
   var indentation = options.indentation || ""
   var results = options.results || { passes: [], fails: [], errors: [] }
 
+  this.results = results
   this.pass = function pass(message) {
     results.passes.push(message)
     print(indent(passed(message), indentation))
