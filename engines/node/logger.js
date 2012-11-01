@@ -5,6 +5,7 @@ var toSource = require("../../utils").source
 
 var INDENT = "  "
 
+var report = console.log.bind(console)
 
 function passed(message) {
   return font.green("✓ " + message)
@@ -20,10 +21,6 @@ function indent(message, indentation) {
   indentation = undefined === indentation ? INDENT : indentation
   message = message || ""
   return message.replace(/^/gm, indentation)
-}
-
-function report(message) {
-  process.stdout.write(message + '\n')
 }
 
 function Logger(options) {
