@@ -1,5 +1,11 @@
 # Changes
 
+## 0.5.2 / 2012-10-31
+
+  - Exit only when `process.exit` is defined. This enables use of browseryfied
+    tests in browser.
+  - Start testing with PanthomJS in a browser.
+
 ## 0.5.1 / 2012-10-31
 
   - Fix bug introduced in 0.5.0 that exited process with a wrong code.
