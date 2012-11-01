@@ -1,10 +1,3 @@
-/* vim:set ts=2 sw=2 sts=2 expandtab */
-/*jshint asi: true newcap: true undef: true es5: true node: true devel: true
-         forin: false */
-/*global define: true */
-
-(typeof define === "undefined" ? function ($) { $(require, exports, module) } : define)(function (require, exports, module, undefined) {
-
 "use strict";
 
 var utils = require("./utils")
@@ -146,7 +139,7 @@ Assert.prototype = {
    * The non-equivalence assertion tests for any deep (with `===`) inequality.
    * @example
    *    assert.notDeepEqual({ a: "foo" }, Object.create({ a: "foo" }),
-   *                        "object's inherit from different prototypes");
+   *                        "object"s inherit from different prototypes");
    */
   notDeepEqual: function notDeepEqual(actual, expected, message) {
     if (!isDeepEqual(actual, expected)) {
@@ -204,7 +197,7 @@ Assert.prototype = {
 
   /**
    * The assertion whether or not given `block` throws an exception. If optional
-   * `Error` argument is provided and it's type of function thrown error is
+   * `Error` argument is provided and it"s type of function thrown error is
    * asserted to be an instance of it, if type of `Error` is string then message
    * of throw exception is asserted to contain it.
    * @param {Function} block
@@ -252,7 +245,7 @@ Assert.prototype = {
     if (threw && (utils.isUndefined(Error) ||
                  // If Error is thrown exception
                  (Error == exception) ||
-                 // If passed `Error` is RegExp using it's test method to
+                 // If passed `Error` is RegExp using it"s test method to
                  // assert thrown exception message.
                  (utils.isRegExp(Error) && Error.test(exception.message)) ||
                  // If passed `Error` is a constructor function testing if
@@ -330,5 +323,3 @@ function isArrayEquivalent(a, b, stack) {
            return isDeepEqual(value, b[index]);
          });
 }
-
-});

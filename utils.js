@@ -1,10 +1,3 @@
-/* vim:set ts=2 sw=2 sts=2 expandtab */
-/*jshint asi: true newcap: true undef: true es5: true node: true devel: true
-         forin: false */
-/*global define: true */
-
-(typeof define === "undefined" ? function ($) { $(require, exports, module) } : define)(function (require, exports, module, undefined) {
-
 "use strict";
 
 /**
@@ -95,7 +88,7 @@ exports.isObject = isObject;
  * Returns true if `value` is an Array.
  * @examples
  *    isArray([1, 2, 3])  // true
- *    isArray({ 0: 'foo', length: 1 }) // false
+ *    isArray({ 0: "foo", length: 1 }) // false
  */
 var isArray = Array.isArray || function isArray(value) {
   Object.prototype.toString.call(value) === "[object Array]";
@@ -118,7 +111,7 @@ exports.isArguments = isArguments;
  * boolean, string)
  * @examples
  *    isPrimitive(3) // true
- *    isPrimitive('foo') // true
+ *    isPrimitive("foo") // true
  *    isPrimitive({ bar: 3 }) // false
  */
 function isPrimitive(value) {
@@ -160,7 +153,7 @@ exports.isEmpty = isEmpty;
 function isJSON(value, visited) {
     // Adding value to array of visited values.
     (visited || (visited = [])).push(value);
-            // If `value` is an atom return `true` cause it's valid JSON.
+            // If `value` is an atom return `true` cause it"s valid JSON.
     return  isPrimitive(value) ||
             // If `value` is an array of JSON values that has not been visited
             // yet.
@@ -168,14 +161,14 @@ function isJSON(value, visited) {
                                   return isJSON(element, visited);
                                 })) ||
             // If `value` is a plain object containing properties with a JSON
-            // values it's a valid JSON.
+            // values it"s a valid JSON.
             (isFlat(value) && Object.keys(value).every(function(key) {
                 var $ = Object.getOwnPropertyDescriptor(value, key);
                 // Check every proprety of a plain object to verify that
-                // it's neither getter nor setter, but a JSON value, that
+                // it"s neither getter nor setter, but a JSON value, that
                 // has not been visited yet.
                 return  ((!isObject($.value) || !~visited.indexOf($.value)) &&
-                        !('get' in $) && !('set' in $) &&
+                        !("get" in $) && !("set" in $) &&
                         isJSON($.value, visited));
             }));
 }
@@ -198,7 +191,7 @@ function instanceOf(value, Type) {
 
   // If `instanceof` returned `false` we do ducktype check since `Type` may be
   // from a different sandbox. If a constructor of the `value` or a constructor
-  // of the value's prototype has same name and source we assume that it's an
+  // of the value"s prototype has same name and source we assume that it"s an
   // instance of the Type.
   if (!isInstanceOf && value) {
     isConstructorNameSame = value.constructor.name === Type.name;
@@ -236,7 +229,7 @@ function source(value, indent, limit, offset, visited) {
     result += "null";
   }
   else if (isString(value)) {
-    result += '"' + value + '"';
+    result += "\"" + value + "\"";
   }
   else if (isFunction(value)) {
     value = String(value).split("\n");
@@ -281,7 +274,7 @@ function source(value, indent, limit, offset, visited) {
         var result = offset + indent + "// ";
         var accessor;
         if (0 <= name.indexOf(" "))
-          name = '"' + name + '"';
+          name = "\"" + name + "\"";
 
         if (descriptor.writable)
           result += "writable ";
@@ -306,7 +299,7 @@ function source(value, indent, limit, offset, visited) {
           }
 
           if (descriptor.set) {
-            if (descriptor.get) result += ',\n';
+            if (descriptor.get) result += ",\n";
             result += offset + indent + "set " + name + " ";
             accessor = source(descriptor.set, indent, _limit, indent + offset,
                               visited);
@@ -325,7 +318,7 @@ function source(value, indent, limit, offset, visited) {
         if (names.length)
           result += ",";
 
-        result += "\n" + offset + indent + '"__proto__": ';
+        result += "\n" + offset + indent + "\"__proto__\": ";
         result += source(Object.getPrototypeOf(value), indent, 0,
                          offset + indent);
       }
@@ -341,5 +334,3 @@ function source(value, indent, limit, offset, visited) {
 exports.source = function (value, indentation, limit) {
   return source(value, indentation, limit);
 };
-
-});
