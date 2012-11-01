@@ -1,8 +1,13 @@
-{ 
+{
   "name": "test",
   "version": "0.5.0",
-  "description": "UncommonJS test runner.",
-  "keywords": [ "test", "commonjs", "unit test" ],
+  "description": "(Un)CommonJS test runner.",
+  "keywords": [
+    "test",
+    "commonjs",
+    "uncommonjs",
+    "unit"
+  ],
   "homepage": "https://github.com/Gozala/test-commonjs/",
   "author": "Irakli Gozalishvili <rfobic@gmail.com> (http://jeditoolkit.com)",
   "contributors": [
@@ -19,15 +24,20 @@
     "url": "https://github.com/Gozala/test-commonjs.git",
     "web": "https//github.com/Gozala/test-commonjs"
   },
-  "bugs": { "url": "http://github.com/Gozala/test-commonjs/issues/" },
-  "scripts": {
-    "test": "node tests/engines/node/test.js",
-    "test-browser": "open tests/engines/browser/index.html"
+  "bugs": {
+    "url": "http://github.com/Gozala/test-commonjs/issues/"
   },
-  "main": "./engines/node/test.js",
-  "engines": { "node": ">=0.4.x" },
-  "licenses": [{
-    "type" : "MIT",
-    "url" : "https://github.com/Gozala/test-commonjs/License.md"
-  }]
+  "scripts": {
+    "test": "node ./test/index.js"
+  },
+  "main": "./test.js",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/Gozala/test-commonjs/License.md"
+    }
+  ],
+  "dependencies": {
+    "ansi-font": "0.0.2"
+  }
 }

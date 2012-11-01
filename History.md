@@ -1,5 +1,9 @@
 # Changes
 
+## 0.5.1 / 2012-10-31
+
+  - Fix bug introduced in 0.5.0 that exited process with a wrong code.
+
 ## 0.5.0 / 2012-10-31
 
   - Switch to logging via `console.log` instead of `process.stdout` for

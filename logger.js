@@ -1,20 +1,20 @@
 "use strict";
 
-var font = require("./ansi-font/index")
-var toSource = require("../../utils").source
+var font = require("ansi-font/index")
+var toSource = require("./utils").source
 
 var INDENT = "  "
 
 var report = console.log.bind(console)
 
 function passed(message) {
-  return font.green("✓ " + message)
+  return font.green("\u2713 " + message)
 }
 function failed(message) {
-  return font.red("✗ " + message)
+  return font.red("\u2717 " + message)
 }
 function errored(message) {
-  return font.magenta("⚡ " + message)
+  return font.magenta("\u26A1 " + message)
 }
 
 function indent(message, indentation) {
@@ -30,8 +30,12 @@ function Logger(options) {
   var print = options.print || report
   var indentation = options.indentation || ""
   var results = options.results || { passes: [], fails: [], errors: [] }
+  this.passes = results.passes
+  this.fails = results.fails
+  this.errors = results.errors
+  results = this
 
-  this.results = results
+
   this.pass = function pass(message) {
     results.passes.push(message)
     print(indent(passed(message), indentation))
@@ -69,4 +73,6 @@ function Logger(options) {
           " Errors:" + results.errors.length)
   }
 }
-exports.Logger = Logger
+
+Logger.Logger = Logger
+module.exports = Logger
