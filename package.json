@@ -28,7 +28,9 @@
     "url": "http://github.com/Gozala/test-commonjs/issues/"
   },
   "scripts": {
-    "test": "node ./test/index.js"
+    "test": "npm run test-node && npm run test-browser",
+    "test-browser": "node ./node_modules/phantomify/bin/cmd.js ./test/index.js",
+    "test-node": "node ./test/index.js"
   },
   "main": "./test.js",
   "licenses": [
@@ -39,5 +41,8 @@
   ],
   "dependencies": {
     "ansi-font": "0.0.2"
+  },
+  "devDependencies": {
+    "phantomify": "~0.x.0"
   }
 }
