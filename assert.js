@@ -291,6 +291,15 @@ function isDeepEqual(actual, expected) {
     return expected === actual;
   }
 
+  else if (utils.instanceOf(actual, Error) ||
+           utils.instanceOf(expected, Error)) {
+    return actual.message === expected.message &&
+           actual.type === expected.type &&
+           actual.name === expected.name &&
+           (actual.constructor && expected.constructor &&
+            actual.constructor.name === expected.constructor.name)
+  }
+
   // 7.3. Other pairs that do not both pass typeof value == "object",
   // equivalence is determined by ==.
   else if (!utils.isObject(actual) && !utils.isObject(expected)) {
