@@ -1,5 +1,10 @@
 # Changes
 
+## 0.6.0 / 2012-11-24
+
+  - Fix assertion for error objects to ignore stack traces on PhantomJS
+    & to make node does asserts them properly.
+
 ## 0.5.2 / 2012-10-31
 
   - Exit only when `process.exit` is defined. This enables use of browseryfied
