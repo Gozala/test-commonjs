@@ -91,7 +91,7 @@ exports.isObject = isObject;
  *    isArray({ 0: "foo", length: 1 }) // false
  */
 var isArray = Array.isArray || function isArray(value) {
-  Object.prototype.toString.call(value) === "[object Array]";
+  return Object.prototype.toString.call(value) === "[object Array]";
 }
 exports.isArray = isArray;
 
@@ -102,7 +102,7 @@ exports.isArray = isArray;
  *    isArguments([1,2,3]); // false
  */
 function isArguments(value) {
-  Object.prototype.toString.call(value) === "[object Arguments]";
+  return Object.prototype.toString.call(value) === "[object Arguments]";
 }
 exports.isArguments = isArguments;
 
