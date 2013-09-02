@@ -96,21 +96,28 @@ exports["test correctness of `assert.equal`"] = function (assert) {
 }
 
 exports["test correctness of `assert.deepEqual`"] = function (assert) {
-  var valid, invalid, report
+  var valid, invalid, report, toString
   valid = [
     [ [], [] ],
     [ {}, {} ],
+    [ Object.create(null), Object.create(null) ],
   ]
   invalid = [
     [ [], undefined ],
     [ [], [1] ]
   ]
   report = null
+  toString = function (x) {
+    if (x.toString) {
+      return x.toString();
+    }
+    return Object.prototype.toString.call(x)
+  }
 
   run({
     "test fixture": function (assert) {
       valid.forEach(function (value, index) {
-        var message = "`" + value[0] + "` is deepEqual of `" + value[1] + "`"
+        var message = "`" + toString(value[0]) + "` is deepEqual of `" + toString(value[1]) + "`"
         assert.deepEqual(value[0], value[1], message)
       })
 

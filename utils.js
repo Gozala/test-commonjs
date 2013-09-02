@@ -183,6 +183,7 @@ exports.isJSON = function (value) {
  * function from different iframe / jetpack module / sandbox).
  */
 function instanceOf(value, Type) {
+  var constructor;
   var isConstructorNameSame;
   var isConstructorSourceSame;
 
@@ -194,8 +195,9 @@ function instanceOf(value, Type) {
   // of the value"s prototype has same name and source we assume that it"s an
   // instance of the Type.
   if (!isInstanceOf && value) {
-    isConstructorNameSame = value.constructor.name === Type.name;
-    isConstructorSourceSame = String(value.constructor) == String(Type);
+    constructor = value.constructor;
+    isConstructorNameSame = constructor && (constructor.name === Type.name);
+    isConstructorSourceSame = String(constructor) == String(Type);
     isInstanceOf = (isConstructorNameSame && isConstructorSourceSame) ||
                     instanceOf(Object.getPrototypeOf(value), Type);
   }
