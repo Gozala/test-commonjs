@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "test-commonjs",
   "version": "0.6.0",
   "description": "(Un)CommonJS test runner.",
   "keywords": [
