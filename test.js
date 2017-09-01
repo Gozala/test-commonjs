@@ -5,7 +5,7 @@ var Logger = require("./logger").Logger
 
 
 var ERR_COMPLETED_ASSERT = "Assert in completed test"
-var ERR_COMPLETED_COMPLETE = "Attemt to complete test more then one times"
+var ERR_COMPLETED_COMPLETE = "Attempt to complete test more then one times"
 var ERR_EXPECT = "AssertionError"
 
 
