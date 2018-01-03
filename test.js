@@ -41,7 +41,7 @@ function Test(name, unit, logger, Assert) {
         if (isSync) assert.end()
       }
     } catch (exception) {
-      if (ERR_EXPECT === exception.name) assert.fail(exception)
+      if (exception.name && exception.name.startsWith(ERR_EXPECT)) assert.fail(exception)
       else logger.error(exception)
       assert.end()
     }
